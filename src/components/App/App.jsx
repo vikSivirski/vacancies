@@ -1,11 +1,16 @@
-import { AppShell, Flex, Stack, Title, Text, Container, TextInput, Button } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import { AppShell, Flex, Stack, Title, Text, Container } from '@mantine/core';
 
 import logo from '../../assets/image2.svg';
+import { useGetVacanciesQuery } from '../../services/hhApi';
 import Counter from '../Counter';
 import CustomNavLink from '../CustomNavLink';
+import Form from '../Form';
+import VacanciesList from '../VacanciesList';
 
 function App() {
+  const { data } = useGetVacanciesQuery();
+  console.log(data);
+  const vacanciesData = data !== undefined ? data.items : [];
   return (
     <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
@@ -22,30 +27,25 @@ function App() {
       </AppShell.Header>
       <AppShell.Main>
         <Container size={1000}>
-          <Flex align="center" justify="space-between">
+          <Flex align="center" justify="space-between" mb="md">
             <Stack gap={0}>
               <Title order={3}>Список вакансий</Title>
               <Text fw={500} color="#0F0F1080">
                 по профессии Frontend-разработчик
               </Text>
             </Stack>
-            <form>
-              <Flex gap="sm">
-                <TextInput
-                  size="md"
-                  placeholder="Должность или название компании"
-                  leftSection={<IconSearch size={16} />}
-                  style={{
-                    minWidth: 403,
-                  }}
-                />
-                <Button size="md" type="submit">
-                  Найти
-                </Button>
-              </Flex>
-            </form>
+            <Form
+              type="search"
+              placeholder="Должность или название компании"
+              style={{
+                minWidth: 403,
+              }}
+            />
           </Flex>
-          <Counter />
+          <Flex justify="space-between">
+            <Counter />
+            <VacanciesList data={vacanciesData} />
+          </Flex>
         </Container>
       </AppShell.Main>
     </AppShell>

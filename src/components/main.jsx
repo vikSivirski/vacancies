@@ -10,7 +10,7 @@ import './index.css';
 import App from './App';
 
 const theme = createTheme({
-  primaryColor: 'blue',
+  primaryColor: 'dark',
   fontFamily: 'Open Sans, sans-serif',
 });
 
