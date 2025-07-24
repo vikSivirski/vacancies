@@ -3,13 +3,13 @@ import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    eslint({
-      failOnError: true,
-      emitWarning: true,
-      emitError: true,
-      cache: false,
-    }),
-  ],
+	plugins: [
+		react(),
+		eslint({
+			failOnError: true,
+			emitWarning: true,
+			emitError: true,
+			cache: false,
+		}),
+	],
 });

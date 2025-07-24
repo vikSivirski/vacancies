@@ -10,16 +10,16 @@ import './index.css';
 import App from './App';
 
 const theme = createTheme({
-  primaryColor: 'dark',
-  fontFamily: 'Open Sans, sans-serif',
+	primaryColor: 'dark',
+	fontFamily: 'Open Sans, sans-serif',
 });
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}>
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-        <App />
-      </MantineProvider>
-    </Provider>
-  </StrictMode>
+	<StrictMode>
+		<Provider store={store}>
+			<MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+				<App />
+			</MantineProvider>
+		</Provider>
+	</StrictMode>
 );
