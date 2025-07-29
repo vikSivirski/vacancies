@@ -6,20 +6,8 @@ const initialState = {
 		add: '',
 	},
 	searchTextForQuery: '',
-	skills: [
-		{
-			id: crypto.randomUUID(),
-			name: 'React',
-		},
-		{
-			id: crypto.randomUUID(),
-			name: 'TypeSkript',
-		},
-		{
-			id: crypto.randomUUID(),
-			name: 'Redux',
-		},
-	],
+	skills: ['React', 'TypeSkript', 'Redux'],
+	cityFilterValue: 'Все',
 	page: 1,
 	perPage: 10,
 };
@@ -41,14 +29,16 @@ const vacancyFilterSlice = createSlice({
 			state.formValues[type] = '';
 		},
 		addSkill: (state, action) => {
-			const newSkill = {
-				id: crypto.randomUUID(),
-				name: action.payload,
-			};
-			state.skills.push(newSkill);
+			if (!state.skills.includes(action.payload)) {
+				state.skills.push(action.payload);
+			}
 		},
 		removeSkill: (state, action) => {
-			state.skills = state.skills.filter((item) => item.id !== action.payload);
+			state.skills = state.skills.filter((item) => item !== action.payload);
+		},
+		setCtiesFilterValue: (state, action) => {
+			state.cityFilterValue = action.payload;
+			console.log(state.cityFilterValue);
 		},
 		setPage: (state, action) => {
 			state.page = action.payload;
@@ -56,6 +46,14 @@ const vacancyFilterSlice = createSlice({
 	},
 });
 
-export const { setSearchTextForQuery, setSearchText, setFormValues, resetFormValues, addSkill, removeSkill, setPage } =
-	vacancyFilterSlice.actions;
+export const {
+	setSearchTextForQuery,
+	setSearchText,
+	setFormValues,
+	resetFormValues,
+	addSkill,
+	removeSkill,
+	setCtiesFilterValue,
+	setPage,
+} = vacancyFilterSlice.actions;
 export default vacancyFilterSlice.reducer;

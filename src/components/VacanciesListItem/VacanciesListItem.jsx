@@ -1,7 +1,8 @@
 import { Badge, Button, Flex, List, Text, Title } from '@mantine/core';
 
 const VacanciesListItem = ({ item }) => {
-	const { name, salary, experience, employer, work_format, address } = item;
+	const { name, salary, experience, employer, work_format, address, alternate_url } = item;
+	console.log(item);
 
 	const salaryFork = (data) => {
 		if (data !== null) {
@@ -71,7 +72,7 @@ const VacanciesListItem = ({ item }) => {
 				<Button size="sm" color="#0F0F10">
 					Смотреть вакансию
 				</Button>
-				<Button size="sm" variant="light">
+				<Button size="sm" variant="light" component="a" href={alternate_url}>
 					Откликнуться
 				</Button>
 			</Flex>

@@ -9,9 +9,17 @@ const VacanciesList = () => {
 	const dispatch = useDispatch();
 	const page = useSelector((state) => state.vacancyFilter.page);
 	const perPage = useSelector((state) => state.vacancyFilter.perPage);
+	const skills = useSelector((state) => state.vacancyFilter.skills);
 	const searchTextForQuery = useSelector((state) => state.vacancyFilter.searchTextForQuery);
+	const citiesFilter = useSelector((state) => state.vacancyFilter.cityFilterValue);
 
-	const { data } = useGetVacanciesQuery({ page, per_page: perPage, text: searchTextForQuery });
+	const skillsString = skills.join(' ');
+	const { data } = useGetVacanciesQuery({
+		page,
+		per_page: perPage,
+		text: `${skillsString} ${searchTextForQuery}`,
+		cityFilterValue: citiesFilter,
+	});
 
 	const vacanciesData = data !== undefined ? data.items : [];
 

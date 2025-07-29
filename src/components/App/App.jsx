@@ -6,6 +6,7 @@ import CustomNavLink from '../CustomNavLink';
 import Form from '../Form';
 import Skills from '../Skills';
 import VacanciesList from '../VacanciesList';
+import CitiesFilter from '../CitiesFilter';
 import { setSearchTextForQuery } from '../../store/slices/vacanciesFilterSlice';
 
 function App() {
@@ -44,7 +45,10 @@ function App() {
 						/>
 					</Flex>
 					<Flex justify="space-between" align="start">
-						<Skills />
+						<Stack w="31%" gap="md">
+							<Skills />
+							<CitiesFilter />
+						</Stack>
 						<VacanciesList />
 					</Flex>
 				</Container>

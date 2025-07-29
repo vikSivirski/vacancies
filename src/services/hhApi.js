@@ -5,7 +5,7 @@ const hhApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: 'https://api.hh.ru/' }),
 	endpoints: (builder) => ({
 		getVacancies: builder.query({
-			query: ({ page = 1, per_page = 10, text = '', search_field = '' } = {}) => {
+			query: ({ page = 1, per_page = 10, text = '', search_field = '', cityFilterValue = 'Все' } = {}) => {
 				const params = new URLSearchParams({
 					professional_role: '96',
 					page,
@@ -13,6 +13,17 @@ const hhApi = createApi({
 				});
 				if (text) params.set('text', text);
 				if (search_field) params.set('search_field', search_field);
+
+				switch (cityFilterValue) {
+					case 'Москва':
+						params.set('area', '1');
+						break;
+					case 'Санкт-Питербург':
+						params.set('area', '2');
+						break;
+					default:
+				}
+
 				return `vacancies?${params.toString()}`;
 			},
 		}),

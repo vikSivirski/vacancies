@@ -14,7 +14,7 @@ const Skills = () => {
 	};
 
 	return (
-		<Stack w="31%" p="md" style={{ borderRadius: '12px', backgroundColor: '#FFFFFF' }}>
+		<Stack w="100%" p="md" style={{ borderRadius: '12px', backgroundColor: '#FFFFFF' }}>
 			<Box>
 				<Title order={6} mb="xs">
 					Ключевые навыки
@@ -24,8 +24,8 @@ const Skills = () => {
 			<Flex wrap="wrap" gap="sm">
 				{skills.map((skill) => {
 					return (
-						<Pill key={skill.id} size="lg" withRemoveButton onRemove={() => dispatch(removeSkill(skill.id))}>
-							{skill.name}
+						<Pill key={crypto.randomUUID()} size="lg" withRemoveButton onRemove={() => dispatch(removeSkill(skill))}>
+							{skill}
 						</Pill>
 					);
 				})}
