@@ -27,8 +27,14 @@ const hhApi = createApi({
 				return `vacancies?${params.toString()}`;
 			},
 		}),
+		getVancyById: builder.query({
+			query: (id) => `vacancies/${id}`,
+		}),
+		getEmployer: builder.query({
+			query: (id) => `https://api.hh.ru/employers/${id}`,
+		}),
 	}),
 });
 
-export const { useGetVacanciesQuery } = hhApi;
+export const { useGetVacanciesQuery, useGetVancyByIdQuery, useGetEmployerQuery } = hhApi;
 export default hhApi;

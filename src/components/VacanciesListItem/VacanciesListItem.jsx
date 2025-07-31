@@ -1,4 +1,5 @@
 import { Badge, Button, Flex, List, Text, Title } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 const VacanciesListItem = ({ item }) => {
 	const { name, salary, experience, employer, work_format, address, alternate_url } = item;
@@ -69,7 +70,7 @@ const VacanciesListItem = ({ item }) => {
 				{address !== null ? address.city : null}
 			</Text>
 			<Flex gap="xs">
-				<Button size="sm" color="#0F0F10">
+				<Button size="sm" color="#0F0F10" component={Link} to={`/vacancy/${item.id}`}>
 					Смотреть вакансию
 				</Button>
 				<Button size="sm" variant="light" component="a" href={alternate_url}>

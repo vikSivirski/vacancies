@@ -1,9 +1,15 @@
 import { NavLink, ThemeIcon } from '@mantine/core';
+import { Link, useLocation } from 'react-router-dom';
 import { IconUserCircle } from '@tabler/icons-react';
 
-const CustomNavLink = ({ label, isActive }) => {
+const CustomNavLink = ({ label, to }) => {
+	const location = useLocation();
+	const isActive = location.pathname === to;
+
 	return (
 		<NavLink
+			component={Link}
+			to={to}
 			label={label}
 			rightSection={isActive ? <ThemeIcon size={6} radius="xl" color="blue" /> : null}
 			leftSection={label === 'Обо мне' ? <IconUserCircle size={18} /> : null}
