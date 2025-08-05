@@ -1,5 +1,6 @@
 import { AppShell, Flex, Stack, Title, Text, Container } from '@mantine/core';
 import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import Form from '../../components/Form';
 import Skills from '../../components/Skills';
@@ -8,6 +9,7 @@ import CitiesFilter from '../../components/CitiesFilter';
 import { setSearchTextForQuery } from '../../store/slices/vacanciesFilterSlice';
 
 const MainPage = () => {
+	const [searchParams, setSearchParams] = useSearchParams();
 	const dispatch = useDispatch();
 
 	return (
@@ -27,14 +29,15 @@ const MainPage = () => {
 							minWidth: 403,
 						}}
 						onSubmit={(searchText) => dispatch(setSearchTextForQuery(searchText))}
+						setSearchParams={setSearchParams}
 					/>
 				</Flex>
 				<Flex justify="space-between" align="start">
 					<Stack w="31%" gap="md">
-						<Skills />
-						<CitiesFilter />
+						<Skills setSearchParams={setSearchParams} />
+						<CitiesFilter setSearchParams={setSearchParams} />
 					</Stack>
-					<VacanciesList />
+					<VacanciesList searchParams={searchParams} />
 				</Flex>
 			</Container>
 		</AppShell.Main>

@@ -4,13 +4,17 @@ import { IconSearch, IconPlus } from '@tabler/icons-react';
 
 import { setFormValues } from '../../store/slices/vacanciesFilterSlice';
 
-const Form = ({ type, label = '', placeholder, size = 'md', style = {}, onSubmit = () => {} }) => {
+const Form = ({ type, label = '', placeholder, size = 'md', style = {}, onSubmit = () => {}, setSearchParams }) => {
 	const dispatch = useDispatch();
 	const value = useSelector((state) => state.vacancyFilter.formValues[type]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (value.trim()) {
+			setSearchParams((prev) => {
+				const curent = Object.fromEntries(prev.entries());
+				return { ...curent, text: value.trim() };
+			});
 			onSubmit(value.trim());
 			dispatch(setFormValues({ type, value: '' }));
 		}

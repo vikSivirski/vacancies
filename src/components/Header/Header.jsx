@@ -12,7 +12,7 @@ const Header = () => {
 					<Title order={3}>.FrontEnd</Title>
 				</Flex>
 				<Flex align="center">
-					<CustomNavLink label="Вакансии FE" to="/" />
+					<CustomNavLink label="Вакансии FE" to="/vacancies" />
 					<CustomNavLink label="Обо мне" to="/about" />
 				</Flex>
 			</Flex>
