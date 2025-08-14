@@ -15,7 +15,7 @@ const Skills = ({ setSearchParams }) => {
 			dispatch(addSkill(trimmedName));
 			setSearchParams((prev) => {
 				const current = Object.fromEntries(prev.entries());
-				return { ...current, skills: updatedSkills.join(',')};
+				return { ...current, skills: updatedSkills.join(',') };
 			});
 		}
 	};
@@ -26,9 +26,9 @@ const Skills = ({ setSearchParams }) => {
 		dispatch(removeSkill(trimmedName));
 		setSearchParams((prev) => {
 			const current = Object.fromEntries(prev.entries());
-			return { ...current, skills: updatedSkills.join(',')};
+			return { ...current, skills: updatedSkills.join(',') };
 		});
-	}
+	};
 
 	return (
 		<Stack w="100%" p="md" style={{ borderRadius: '12px', backgroundColor: '#FFFFFF' }}>

@@ -44,7 +44,7 @@ const Form = ({ type, label = '', placeholder, size = 'md', style = {}, onSubmit
 					value={value}
 					onChange={(e) => dispatch(setFormValues({ type, value: e.target.value }))}
 				/>
-				<Button w={type === 'add' ? 30 : null} p={type === 'add' ? 0 : null} size={size} type="submit" color="blue">
+				<Button w={type === 'add' ? 30 : null} p={type === 'add' ? 0 : null} size={size} type="submit" color="#4263EB">
 					{submitBtnName(type)}
 				</Button>
 			</Flex>

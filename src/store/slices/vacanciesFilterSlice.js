@@ -7,7 +7,7 @@ const initialState = {
 	},
 	searchTextForQuery: '',
 	skills: ['React', 'TypeSkript', 'Redux'],
-	cityFilterValue: 'Все',
+	cityFilterValue: 'Москва',
 	page: 1,
 	perPage: 10,
 };

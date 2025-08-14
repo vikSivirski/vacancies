@@ -1,16 +1,30 @@
 import { AppShell, Badge, Button, Container, Flex, Box, Text, Title, Loader } from '@mantine/core';
+import parse from 'html-react-parser';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { useGetVancyByIdQuery, useGetEmployerQuery } from '../../services/hhApi';
+import { useGetVacanciesQuery, useGetVancyByIdQuery } from '../../services/hhApi';
 
 const AboutVacancyPage = () => {
 	const { id } = useParams();
-	const { data: item, isLoading } = useGetVancyByIdQuery(id);
-	const employerId = item?.employer?.id;
-	const { data: employerData } = useGetEmployerQuery(employerId);
+
+	const { page, perPage, skills, searchTextForQuery, cityFilterValue } = useSelector((state) => state.vacancyFilter);
+	const skillsString = skills.join(' ');
+	const { data, isLoading } = useGetVacanciesQuery({
+		page,
+		per_page: perPage,
+		text: `${skillsString} ${searchTextForQuery}`,
+		cityFilterValue: cityFilterValue,
+	});
+
 	if (isLoading) return <Loader />;
-	const { name, salary, experience, employer, work_format, address, alternate_url } = item;
-	const employerDescription = employerData?.description ?? null;
+	const vacanciesData = data !== undefined ? data.items : [];
+	const vacancy = vacanciesData.find((v) => v.id === id);
+
+	const { data: item } = useGetVancyByIdQuery(vacancy.id);
+	const vacancyDescription = item !== undefined ? item.description : '';
+
+	const { name, salary, experience, employer, work_format, address, alternate_url } = vacancy;
 	const salaryFork = (data) => {
 		if (data !== null) {
 			if (data.to === null) {
@@ -89,7 +103,7 @@ const AboutVacancyPage = () => {
 					style={{ display: 'block', width: '100%', borderRadius: '12px', backgroundColor: '#FFFFFF' }}
 				>
 					<Title order={2}>Компания</Title>
-					<Text>{employerDescription}</Text>
+					<Box>{parse(vacancyDescription)}</Box>
 				</Box>
 			</Container>
 		</AppShell.Main>

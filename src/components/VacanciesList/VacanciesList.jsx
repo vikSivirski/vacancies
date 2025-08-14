@@ -28,7 +28,7 @@ const VacanciesList = () => {
 	});
 
 	return (
-		<Box w="65%">
+		<Box w="100%">
 			<List listStyleType="none" w="100%">
 				{vacanciesItems}
 			</List>

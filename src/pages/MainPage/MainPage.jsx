@@ -1,16 +1,34 @@
-import { AppShell, Flex, Stack, Title, Text, Container } from '@mantine/core';
+import { AppShell, Flex, Stack, Title, Text, Container, Tabs } from '@mantine/core';
 import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Form from '../../components/Form';
 import Skills from '../../components/Skills';
-import VacanciesList from '../../components/VacanciesList';
-import CitiesFilter from '../../components/CitiesFilter';
-import { setSearchTextForQuery } from '../../store/slices/vacanciesFilterSlice';
+import { setSearchTextForQuery, setCtiesFilterValue, addSkill } from '../../store/slices/vacanciesFilterSlice';
 
 const MainPage = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const dispatch = useDispatch();
+	const { city } = useParams();
+	const navigate = useNavigate();
+	const activeTab = city === 'moscow' ? 'Москва' : city === 'petersburg' ? 'Санкт-Петербург' : 'Москва';
+
+	const handleChange = (value) => {
+		if (value === 'Москва') navigate('/vacancies/moscow');
+		if (value === 'Санкт-Петербург') navigate('/vacancies/petersburg');
+	};
+
+	useEffect(() => {
+		const params = Object.fromEntries(searchParams.entries());
+
+		if (params.text) dispatch(setSearchTextForQuery(params.text));
+		if (params.city) dispatch(setCtiesFilterValue(params.city));
+		if (params.skills) {
+			const skillsArray = params.skills.split(',');
+			skillsArray.forEach((skill) => dispatch(addSkill(skill)));
+		}
+	}, []);
 
 	return (
 		<AppShell.Main>
@@ -35,9 +53,16 @@ const MainPage = () => {
 				<Flex justify="space-between" align="start">
 					<Stack w="31%" gap="md">
 						<Skills setSearchParams={setSearchParams} />
-						<CitiesFilter setSearchParams={setSearchParams} />
 					</Stack>
-					<VacanciesList searchParams={searchParams} />
+					<Stack w="65%" gap="md">
+						<Tabs color="#4263EB" defaultValue={activeTab} onChange={handleChange}>
+							<Tabs.List mb="md">
+								<Tabs.Tab value="Москва">Москва</Tabs.Tab>
+								<Tabs.Tab value="Санкт-Петербург">Санкт-Петербург</Tabs.Tab>
+							</Tabs.List>
+						</Tabs>
+						<Outlet />
+					</Stack>
 				</Flex>
 			</Container>
 		</AppShell.Main>
