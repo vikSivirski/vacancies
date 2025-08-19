@@ -1,14 +1,14 @@
-import { NavLink, ThemeIcon } from '@mantine/core';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink as MantineNavLink, ThemeIcon } from '@mantine/core';
+import { NavLink, useMatch } from 'react-router-dom';
 import { IconUserCircle } from '@tabler/icons-react';
 
 const CustomNavLink = ({ label, to }) => {
-	const location = useLocation();
-	const isActive = location.pathname === to;
+	const match = useMatch(to === '/vacancies' ? '/vacancies/*' : to);
+	const isActive = Boolean(match);
 
 	return (
-		<NavLink
-			component={Link}
+		<MantineNavLink
+			component={NavLink}
 			to={to}
 			label={label}
 			rightSection={isActive ? <ThemeIcon size={6} radius="xl" color="blue" /> : null}

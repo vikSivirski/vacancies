@@ -1,4 +1,4 @@
-import { List, Box, Pagination, Center } from '@mantine/core';
+import { List, Box, Pagination, Center, Loader } from '@mantine/core';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useGetVacanciesQuery } from '../../services/hhApi';
@@ -14,35 +14,37 @@ const VacanciesList = () => {
 	const citiesFilter = useSelector((state) => state.vacancyFilter.cityFilterValue);
 
 	const skillsString = skills.join(' ');
-	const { data } = useGetVacanciesQuery({
-		page,
-		per_page: perPage,
-		text: `${skillsString} ${searchTextForQuery}`,
-		cityFilterValue: citiesFilter,
-	});
+	const { data, isFetching } = useGetVacanciesQuery(
+		{
+			page,
+			per_page: perPage,
+			text: `${skillsString} ${searchTextForQuery}`,
+			cityFilterValue: citiesFilter,
+		},
+		{ skip: !citiesFilter }
+	);
 
 	const vacanciesData = data !== undefined ? data.items : [];
-
 	const vacanciesItems = vacanciesData.map((item) => {
 		return <VacanciesListItem item={item} key={item.id} />;
 	});
 
-	return (
-		<Box w="100%">
+	const content = isFetching ? (
+		<Center>
+			<Loader />
+		</Center>
+	) : (
+		<>
 			<List listStyleType="none" w="100%">
 				{vacanciesItems}
 			</List>
 			<Center>
-				<Pagination
-					total={data?.pages || Math.ceil(data?.found / perPage)}
-					value={page}
-					onChange={(p) => dispatch(setPage(p))}
-					mt="md"
-					radius="xs"
-				/>
+				<Pagination total={data?.pages - 1} value={page} onChange={(p) => dispatch(setPage(p))} mt="md" radius="xs" />
 			</Center>
-		</Box>
+		</>
 	);
+
+	return <Box w="100%">{content}</Box>;
 };
 
 export default VacanciesList;

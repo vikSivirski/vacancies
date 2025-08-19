@@ -1,30 +1,18 @@
-import { AppShell, Badge, Button, Container, Flex, Box, Text, Title, Loader } from '@mantine/core';
+import { AppShell, Button, Container, Flex, Box, Text, Title, Loader } from '@mantine/core';
 import parse from 'html-react-parser';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-import { useGetVacanciesQuery, useGetVancyByIdQuery } from '../../services/hhApi';
+import { useGetVancyByIdQuery } from '../../services/hhApi';
+import WorkFormat from '../../components/WorkFormat';
 
 const AboutVacancyPage = () => {
 	const { id } = useParams();
-
-	const { page, perPage, skills, searchTextForQuery, cityFilterValue } = useSelector((state) => state.vacancyFilter);
-	const skillsString = skills.join(' ');
-	const { data, isLoading } = useGetVacanciesQuery({
-		page,
-		per_page: perPage,
-		text: `${skillsString} ${searchTextForQuery}`,
-		cityFilterValue: cityFilterValue,
-	});
+	const { data: vacancy, isLoading } = useGetVancyByIdQuery(id);
 
 	if (isLoading) return <Loader />;
-	const vacanciesData = data !== undefined ? data.items : [];
-	const vacancy = vacanciesData.find((v) => v.id === id);
+	if (!vacancy) return <Text>Вакансия не найдена</Text>;
 
-	const { data: item } = useGetVancyByIdQuery(vacancy.id);
-	const vacancyDescription = item !== undefined ? item.description : '';
-
-	const { name, salary, experience, employer, work_format, address, alternate_url } = vacancy;
+	const { name, salary, experience, employer, work_format, address, alternate_url, description } = vacancy;
 	const salaryFork = (data) => {
 		if (data !== null) {
 			if (data.to === null) {
@@ -35,34 +23,6 @@ const AboutVacancyPage = () => {
 		} else {
 			return 'Зарплата не указана';
 		}
-	};
-
-	const workFormat = (data) => {
-		return (
-			<Flex gap="xs" mb="xs">
-				{data.map((item) => {
-					if (item.name.includes('работодателя')) {
-						return (
-							<Badge key={item.id} variant="light" radius="xs" color="gray">
-								Офис
-							</Badge>
-						);
-					} else if (item.name === 'Гибрид') {
-						return (
-							<Badge key={item.id} color="#0F0F10" radius="xs">
-								{item.name}
-							</Badge>
-						);
-					} else if (item.name === 'Удалённо') {
-						return (
-							<Badge key={item.id} color="#4263EB" radius="xs">
-								Можно удаленно
-							</Badge>
-						);
-					}
-				})}
-			</Flex>
-		);
 	};
 
 	return (
@@ -87,7 +47,7 @@ const AboutVacancyPage = () => {
 					<Text mb="xs" fw={400} size="md" color="#0F0F1080">
 						{employer.name}
 					</Text>
-					{workFormat(work_format)}
+					<WorkFormat data={work_format} />
 					<Text fw={400} size="md" mb="md">
 						{address !== null ? address.city : null}
 					</Text>
@@ -103,7 +63,7 @@ const AboutVacancyPage = () => {
 					style={{ display: 'block', width: '100%', borderRadius: '12px', backgroundColor: '#FFFFFF' }}
 				>
 					<Title order={2}>Компания</Title>
-					<Box>{parse(vacancyDescription)}</Box>
+					<Box>{parse(description)}</Box>
 				</Box>
 			</Container>
 		</AppShell.Main>

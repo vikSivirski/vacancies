@@ -1,9 +1,10 @@
-import { Badge, Button, Flex, List, Text, Title } from '@mantine/core';
+import { Button, Flex, List, Text, Title } from '@mantine/core';
 import { Link } from 'react-router-dom';
+
+import WorkFormat from '../WorkFormat';
 
 const VacanciesListItem = ({ item }) => {
 	const { name, salary, experience, employer, work_format, address, alternate_url } = item;
-	console.log(item);
 
 	const salaryFork = (data) => {
 		if (data !== null) {
@@ -15,34 +16,6 @@ const VacanciesListItem = ({ item }) => {
 		} else {
 			return 'Зарплата не указана';
 		}
-	};
-
-	const workFormat = (data) => {
-		return (
-			<Flex gap="xs" mb="xs">
-				{data.map((item) => {
-					if (item.name.includes('работодателя')) {
-						return (
-							<Badge key={item.id} variant="light" radius="xs" color="gray">
-								Офис
-							</Badge>
-						);
-					} else if (item.name === 'Гибрид') {
-						return (
-							<Badge key={item.id} color="#0F0F10" radius="xs">
-								{item.name}
-							</Badge>
-						);
-					} else if (item.name === 'Удалённо') {
-						return (
-							<Badge key={item.id} color="#4263EB" radius="xs">
-								Можно удаленно
-							</Badge>
-						);
-					}
-				})}
-			</Flex>
-		);
 	};
 
 	return (
@@ -65,7 +38,7 @@ const VacanciesListItem = ({ item }) => {
 			<Text mb="xs" fw={400} size="md" color="#0F0F1080">
 				{employer.name}
 			</Text>
-			{workFormat(work_format)}
+			<WorkFormat data={work_format} />
 			<Text fw={400} size="md" mb="md">
 				{address !== null ? address.city : null}
 			</Text>
