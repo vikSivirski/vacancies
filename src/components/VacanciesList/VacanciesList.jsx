@@ -1,4 +1,4 @@
-import { List, Box, Pagination, Center, Loader } from '@mantine/core';
+import { List, Box, Pagination, Center, Loader, Text } from '@mantine/core';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useGetVacanciesQuery } from '../../services/hhApi';
@@ -43,8 +43,20 @@ const VacanciesList = () => {
 			</Center>
 		</>
 	);
+	const notFoundMessage = 'По указанным параметрам вакнсий не нашлось :(';
+	const notFound =
+		vacanciesData.length === 0 && !isFetching ? (
+			<Center>
+				<Text size="lg">{notFoundMessage}</Text>
+			</Center>
+		) : null;
 
-	return <Box w="100%">{content}</Box>;
+	return (
+		<Box w="100%">
+			{content}
+			{notFound}
+		</Box>
+	);
 };
 
 export default VacanciesList;

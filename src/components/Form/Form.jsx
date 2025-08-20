@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { TextInput, Button, Flex } from '@mantine/core';
-import { IconSearch, IconPlus } from '@tabler/icons-react';
+import { TbSearch, TbPlus } from 'react-icons/tb';
 
 import { setFormValues } from '../../store/slices/vacanciesFilterSlice';
 
@@ -25,7 +25,7 @@ const Form = ({ type, label = '', placeholder, size = 'md', style = {}, onSubmit
 			case 'search':
 				return 'Найти';
 			case 'add':
-				return <IconPlus size={28} />;
+				return <TbPlus size={28} />;
 			default:
 				break;
 		}
@@ -39,7 +39,7 @@ const Form = ({ type, label = '', placeholder, size = 'md', style = {}, onSubmit
 					size={size}
 					radius="md"
 					placeholder={placeholder}
-					leftSection={type === 'search' ? <IconSearch size={18} /> : null}
+					leftSection={type === 'search' ? <TbSearch size={18} /> : null}
 					style={style}
 					value={value}
 					onChange={(e) => dispatch(setFormValues({ type, value: e.target.value }))}

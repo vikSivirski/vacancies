@@ -25,6 +25,7 @@ const ResumeForm = () => {
 		<Box w="100%" p="md" style={{ display: 'block', width: '100%', borderRadius: '12px', backgroundColor: '#FFFFFF' }}>
 			<form onSubmit={handleSubmit}>
 				<TextInput
+					label="Фамилия Имя"
 					size="md"
 					mb="md"
 					radius="md"
@@ -33,6 +34,7 @@ const ResumeForm = () => {
 					onChange={(e) => dispatch(setUserName(e.target.value))}
 				/>
 				<TextInput
+					label="Навыки"
 					size="md"
 					mb="md"
 					radius="md"
@@ -41,6 +43,7 @@ const ResumeForm = () => {
 					onChange={(e) => dispatch(setSkillsInput(e.target.value))}
 				/>
 				<Textarea
+					label="О себе"
 					size="md"
 					autosize
 					mb="md"

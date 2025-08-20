@@ -5,13 +5,16 @@ import WorkFormat from '../WorkFormat';
 
 const VacanciesListItem = ({ item }) => {
 	const { name, salary, experience, employer, work_format, address, alternate_url } = item;
+	console.log(item);
 
 	const salaryFork = (data) => {
 		if (data !== null) {
 			if (data.to === null) {
-				return `${data.from}`;
+				return `${data.from} ₽`;
+			} else if (data.from === null) {
+				return `до ${data.to} ₽`;
 			} else {
-				return `${data.from} - ${data.to}`;
+				return `${data.from} - ${data.to} ₽`;
 			}
 		} else {
 			return 'Зарплата не указана';
@@ -29,7 +32,7 @@ const VacanciesListItem = ({ item }) => {
 			</Title>
 			<Flex gap="md" mb="md">
 				<Text fw={400} size="xl">
-					{salaryFork(salary)} ₽
+					{salaryFork(salary)}
 				</Text>
 				<Text fw={400} size="md" color="#0F0F1080">
 					{experience.name}

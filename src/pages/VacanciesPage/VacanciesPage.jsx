@@ -7,7 +7,7 @@ import Form from '../../components/Form';
 import Skills from '../../components/Skills';
 import { setSearchTextForQuery, setCtiesFilterValue, addSkill } from '../../store/slices/vacanciesFilterSlice';
 
-const MainPage = () => {
+const VacanciesPage = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const dispatch = useDispatch();
 	const { city } = useParams();
@@ -69,4 +69,4 @@ const MainPage = () => {
 	);
 };
 
-export default MainPage;
+export default VacanciesPage;

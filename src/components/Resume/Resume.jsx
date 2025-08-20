@@ -1,6 +1,6 @@
 import { Box, Flex, List, Text, Title, UnstyledButton } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconEdit } from '@tabler/icons-react';
+import { TbEdit } from 'react-icons/tb';
 
 import { toggleEditing } from '../../store/slices/resumeSlice';
 
@@ -11,7 +11,7 @@ const Resume = () => {
 		<Box w="100%" p="md" style={{ display: 'block', width: '100%', borderRadius: '12px', backgroundColor: '#FFFFFF' }}>
 			<Flex justify="space-between" align="start" mb="md">
 				<Title>{userName}</Title>
-				<UnstyledButton onClick={() => dispatch(toggleEditing())}>{<IconEdit />}</UnstyledButton>
+				<UnstyledButton onClick={() => dispatch(toggleEditing())}>{<TbEdit />}</UnstyledButton>
 			</Flex>
 			<Title order={3}>Мои навыки</Title>
 			<List mb="md">
