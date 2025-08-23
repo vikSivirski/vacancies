@@ -1,11 +1,25 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+interface GetVacanciesParams {
+	page?: string;
+	per_page?: string;
+	text: string;
+	search_field: string;
+	cityFilterValue: string;
+}
+
 const hhApi = createApi({
 	reducerPath: 'hhApi',
 	baseQuery: fetchBaseQuery({ baseUrl: 'https://api.hh.ru/' }),
 	endpoints: (builder) => ({
 		getVacancies: builder.query({
-			query: ({ page = 1, per_page = 10, text = '', search_field = '', cityFilterValue = 'Москва' } = {}) => {
+			query: ({
+				page = 1,
+				per_page = 10,
+				text = '',
+				search_field = '',
+				cityFilterValue = 'Москва',
+			}: GetVacanciesParams = {}) => {
 				const params = new URLSearchParams({
 					professional_role: '96',
 					page,

@@ -1,17 +1,22 @@
 import { List, Box, Pagination, Center, Loader, Text } from '@mantine/core';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { RootState } from '../../store/store';
 import { useGetVacanciesQuery } from '../../services/hhApi';
 import { setPage } from '../../store/slices/vacanciesFilterSlice';
 import VacanciesListItem from '../VacanciesListItem';
 
+interface Vacancy {
+	id: string;
+}
+
 const VacanciesList = () => {
 	const dispatch = useDispatch();
-	const page = useSelector((state) => state.vacancyFilter.page);
-	const perPage = useSelector((state) => state.vacancyFilter.perPage);
-	const skills = useSelector((state) => state.vacancyFilter.skills);
-	const searchTextForQuery = useSelector((state) => state.vacancyFilter.searchTextForQuery);
-	const citiesFilter = useSelector((state) => state.vacancyFilter.cityFilterValue);
+	const page = useSelector((state: RootState) => state.vacancyFilter.page);
+	const perPage = useSelector((state: RootState) => state.vacancyFilter.perPage);
+	const skills = useSelector((state: RootState) => state.vacancyFilter.skills);
+	const searchTextForQuery = useSelector((state: RootState) => state.vacancyFilter.searchTextForQuery);
+	const citiesFilter = useSelector((state: RootState) => state.vacancyFilter.cityFilterValue);
 
 	const skillsString = skills.join(' ');
 	const { data, isFetching } = useGetVacanciesQuery(
@@ -25,7 +30,7 @@ const VacanciesList = () => {
 	);
 
 	const vacanciesData = data !== undefined ? data.items : [];
-	const vacanciesItems = vacanciesData.map((item) => {
+	const vacanciesItems = vacanciesData.map((item: Vacancy) => {
 		return <VacanciesListItem item={item} key={item.id} />;
 	});
 

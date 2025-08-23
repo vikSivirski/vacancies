@@ -6,14 +6,14 @@ import { useGetVancyByIdQuery } from '../../services/hhApi';
 import WorkFormat from '../../components/WorkFormat';
 
 const AboutVacancyPage = () => {
-	const { id } = useParams();
+	const { id } = useParams<{ id: string }>();
 	const { data: vacancy, isLoading } = useGetVancyByIdQuery(id);
 
 	if (isLoading) return <Loader />;
 	if (!vacancy) return <Text>Вакансия не найдена</Text>;
 
 	const { name, salary, experience, employer, work_format, address, alternate_url, description } = vacancy;
-	const salaryFork = (data) => {
+	const salaryFork = (data: { from: string | null; to: string | null } | null) => {
 		if (data !== null) {
 			if (data.to === null) {
 				return `${data.from}`;

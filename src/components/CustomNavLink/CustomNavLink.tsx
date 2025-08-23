@@ -2,7 +2,12 @@ import { NavLink as MantineNavLink, ThemeIcon } from '@mantine/core';
 import { NavLink, useMatch } from 'react-router-dom';
 import { TbUserCircle } from 'react-icons/tb';
 
-const CustomNavLink = ({ label, to }) => {
+type CustomNavLinkProps = {
+	label: string;
+	to: string;
+};
+
+const CustomNavLink = ({ label, to }: CustomNavLinkProps) => {
 	const match = useMatch(to === '/vacancies' ? '/vacancies/*' : to);
 	const isActive = Boolean(match);
 

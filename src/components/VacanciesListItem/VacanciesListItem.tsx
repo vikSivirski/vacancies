@@ -3,11 +3,26 @@ import { Link } from 'react-router-dom';
 
 import WorkFormat from '../WorkFormat';
 
-const VacanciesListItem = ({ item }) => {
+interface Vacancy {
+	id: string;
+	name: string;
+	salary: { from: number | null; to: number | null } | null;
+	experience: { name: string };
+	employer: { name: string };
+	work_format: { id: string; name: string }[];
+	address: { city: string };
+	alternate_url: string;
+}
+
+type VacancyListItemPropType = {
+	item: Vacancy;
+};
+
+const VacanciesListItem = ({ item }: VacancyListItemPropType) => {
 	const { name, salary, experience, employer, work_format, address, alternate_url } = item;
 	console.log(item);
 
-	const salaryFork = (data) => {
+	const salaryFork = (data: Vacancy['salary']) => {
 		if (data !== null) {
 			if (data.to === null) {
 				return `${data.from} ₽`;

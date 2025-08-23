@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux';
 import VacanciesList from '../VacanciesList';
 import { setCtiesFilterValue } from '../../store/slices/vacanciesFilterSlice';
 
-const VacanciesTab = ({ city }) => {
+type VacanciesTabPropTypes = {
+	city: string;
+};
+
+const VacanciesTab = ({ city }: VacanciesTabPropTypes) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {

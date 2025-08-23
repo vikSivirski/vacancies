@@ -3,15 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TbEdit } from 'react-icons/tb';
 
 import { toggleEditing } from '../../store/slices/resumeSlice';
+import { RootState } from '../../store/store';
 
 const Resume = () => {
 	const dispatch = useDispatch();
-	const { userName, skills, aboutMe } = useSelector((state) => state.resume);
+	const { userName, skills, aboutMe } = useSelector((state: RootState) => state.resume);
 	return (
 		<Box w="100%" p="md" style={{ display: 'block', width: '100%', borderRadius: '12px', backgroundColor: '#FFFFFF' }}>
 			<Flex justify="space-between" align="start" mb="md">
 				<Title>{userName}</Title>
-				<UnstyledButton onClick={() => dispatch(toggleEditing())}>{<TbEdit />}</UnstyledButton>
+				<UnstyledButton onClick={() => dispatch(toggleEditing())}>
+					<TbEdit />
+				</UnstyledButton>
 			</Flex>
 			<Title order={3}>Мои навыки</Title>
 			<List mb="md">

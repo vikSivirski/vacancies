@@ -1,4 +1,6 @@
-export async function vacancyLoader({ params }) {
+import { LoaderFunction } from 'react-router-dom';
+
+export const vacancyLoader: LoaderFunction = async ({ params }) => {
 	const { id } = params;
 	const res = await fetch(`https://api.hh.ru/vacancies/${id}`);
 
@@ -7,4 +9,4 @@ export async function vacancyLoader({ params }) {
 	}
 
 	return null;
-}
+};

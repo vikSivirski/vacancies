@@ -14,7 +14,7 @@ const VacanciesPage = () => {
 	const navigate = useNavigate();
 	const activeTab = city === 'moscow' ? 'Москва' : city === 'petersburg' ? 'Санкт-Петербург' : 'Москва';
 
-	const handleChange = (value) => {
+	const handleChange = (value: string | null) => {
 		if (value === 'Москва') navigate('/vacancies/moscow');
 		if (value === 'Санкт-Петербург') navigate('/vacancies/petersburg');
 	};
@@ -42,6 +42,7 @@ const VacanciesPage = () => {
 					</Stack>
 					<Form
 						type="search"
+						size="lg"
 						placeholder="Должность или название компании"
 						style={{
 							minWidth: 403,

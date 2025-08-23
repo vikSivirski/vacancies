@@ -1,32 +1,40 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Box, Flex, Pill, Stack, Title } from '@mantine/core';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Form from '../Form';
+import { RootState } from '../../store/store';
 import { addSkill, removeSkill } from '../../store/slices/vacanciesFilterSlice';
 
-const Skills = ({ setSearchParams }) => {
-	const skills = useSelector((state) => state.vacancyFilter.skills);
+type SkillsPropTypes = {
+	setSearchParams: Dispatch<SetStateAction<URLSearchParams>>;
+};
+
+const Skills = ({ setSearchParams }: SkillsPropTypes) => {
+	const skills = useSelector((state: RootState) => state.vacancyFilter.skills);
 	const dispatch = useDispatch();
 
-	const handleAddSkill = (name) => {
+	const handleAddSkill = (name: string) => {
 		const trimmedName = name.trim();
 		const updatedSkills = [...skills, trimmedName];
 		if (trimmedName) {
 			dispatch(addSkill(trimmedName));
 			setSearchParams((prev) => {
-				const current = Object.fromEntries(prev.entries());
-				return { ...current, skills: updatedSkills.join(',') };
+				const current = new URLSearchParams(prev);
+				current.set('skills', updatedSkills.join(','));
+				return current;
 			});
 		}
 	};
 
-	const handleRemoveSkills = (name) => {
+	const handleRemoveSkills = (name: string) => {
 		const trimmedName = name.trim();
 		const updatedSkills = skills.filter((s) => s !== trimmedName);
 		dispatch(removeSkill(trimmedName));
 		setSearchParams((prev) => {
-			const current = Object.fromEntries(prev.entries());
-			return { ...current, skills: updatedSkills.join(',') };
+			const current = new URLSearchParams(prev);
+			current.set('skills', updatedSkills.join(','));
+			return current;
 		});
 	};
 

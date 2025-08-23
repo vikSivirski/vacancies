@@ -1,6 +1,15 @@
 import { Flex, Badge } from '@mantine/core';
 
-const WorkFormat = ({ data }) => {
+type WorkFormatItem = {
+	id: string;
+	name: string;
+};
+
+type WorkFormatPropTypes = {
+	data: WorkFormatItem[];
+};
+
+const WorkFormat = ({ data }: WorkFormatPropTypes) => {
 	return (
 		<Flex gap="xs" mb="xs">
 			{data.map((item) => {

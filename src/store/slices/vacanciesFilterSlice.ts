@@ -1,6 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface FormValues {
+	search: string;
+	add: string;
+}
+
+type VacancyFilterStateTypes = {
+	formValues: FormValues;
+	searchTextForQuery: string;
+	skills: string[];
+	cityFilterValue: string;
+	page: number;
+	perPage: number;
+};
+
+const initialState: VacancyFilterStateTypes = {
 	formValues: {
 		search: '',
 		add: '',
@@ -16,7 +30,7 @@ const vacancyFilterSlice = createSlice({
 	name: 'vacancyFilter',
 	initialState,
 	reducers: {
-		setFormValues: (state, action) => {
+		setFormValues: (state, action: PayloadAction<{ type: keyof FormValues; value: string }>) => {
 			const { type, value } = action.payload;
 			state.formValues[type] = value;
 		},
@@ -24,7 +38,7 @@ const vacancyFilterSlice = createSlice({
 			state.searchTextForQuery = action.payload;
 			state.page = 1;
 		},
-		resetFormValues: (state, action) => {
+		resetFormValues: (state, action: PayloadAction<{ type: keyof FormValues }>) => {
 			const { type } = action.payload;
 			state.formValues[type] = '';
 		},
@@ -48,7 +62,6 @@ const vacancyFilterSlice = createSlice({
 
 export const {
 	setSearchTextForQuery,
-	setSearchText,
 	setFormValues,
 	resetFormValues,
 	addSkill,

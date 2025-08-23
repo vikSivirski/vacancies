@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Box, Button, Textarea, TextInput } from '@mantine/core';
 
+import { RootState } from '../../store/store';
 import { toggleEditing, setUserName, setSkills, setAboutText } from '../../store/slices/resumeSlice';
 
 const ResumeForm = () => {
 	const dispatch = useDispatch();
-	const { userName, skills, aboutMe } = useSelector((state) => state.resume);
+	const { userName, skills, aboutMe } = useSelector((state: RootState) => state.resume);
 	const [skillsInput, setSkillsInput] = useState(skills.join(', '));
 
 	const handleSubmit = () => {
@@ -40,7 +41,7 @@ const ResumeForm = () => {
 					radius="md"
 					placeholder="Ваши навыки"
 					value={skillsInput}
-					onChange={(e) => dispatch(setSkillsInput(e.target.value))}
+					onChange={(e) => setSkillsInput(e.target.value)}
 				/>
 				<Textarea
 					label="О себе"
