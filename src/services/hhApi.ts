@@ -1,12 +1,30 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface GetVacanciesParams {
-	page?: string;
-	per_page?: string;
-	text: string;
-	search_field: string;
-	cityFilterValue: string;
+	page?: number;
+	per_page?: number;
+	text?: string;
+	search_field?: string;
+	cityFilterValue?: string;
 }
+
+const setOptionalParams = (params: URLSearchParams, options: { text?: string; search_field?: string }) => {
+	if (options.text) params.set('text', options.text);
+	if (options.search_field) params.set('search_field', options.search_field);
+};
+
+const setCityParam = (params: URLSearchParams, city: string) => {
+	switch (city) {
+		case 'Москва':
+			params.set('area', '1');
+			break;
+		case 'Санкт-Петербург':
+			params.set('area', '2');
+			break;
+		default:
+			break;
+	}
+};
 
 const hhApi = createApi({
 	reducerPath: 'hhApi',
@@ -22,21 +40,11 @@ const hhApi = createApi({
 			}: GetVacanciesParams = {}) => {
 				const params = new URLSearchParams({
 					professional_role: '96',
-					page,
-					per_page,
+					page: `${page}`,
+					per_page: `${per_page}`,
 				});
-				if (text) params.set('text', text);
-				if (search_field) params.set('search_field', search_field);
-
-				switch (cityFilterValue) {
-					case 'Москва':
-						params.set('area', '1');
-						break;
-					case 'Санкт-Петербург':
-						params.set('area', '2');
-						break;
-					default:
-				}
+				setOptionalParams(params, { text, search_field });
+				setCityParam(params, cityFilterValue);
 
 				return `vacancies?${params.toString()}`;
 			},

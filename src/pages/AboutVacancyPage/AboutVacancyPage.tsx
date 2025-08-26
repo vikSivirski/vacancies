@@ -3,28 +3,16 @@ import parse from 'html-react-parser';
 import { useParams } from 'react-router-dom';
 
 import { useGetVancyByIdQuery } from '../../services/hhApi';
+import formatSalary from '../../utils/formatSalary';
 import WorkFormat from '../../components/WorkFormat';
 
 const AboutVacancyPage = () => {
 	const { id } = useParams<{ id: string }>();
 	const { data: vacancy, isLoading } = useGetVancyByIdQuery(id);
-
 	if (isLoading) return <Loader />;
 	if (!vacancy) return <Text>Вакансия не найдена</Text>;
 
 	const { name, salary, experience, employer, work_format, address, alternate_url, description } = vacancy;
-	const salaryFork = (data: { from: string | null; to: string | null } | null) => {
-		if (data !== null) {
-			if (data.to === null) {
-				return `${data.from}`;
-			} else {
-				return `${data.from} - ${data.to}`;
-			}
-		} else {
-			return 'Зарплата не указана';
-		}
-	};
-
 	return (
 		<AppShell.Main>
 			<Container size={658}>
@@ -38,7 +26,7 @@ const AboutVacancyPage = () => {
 					</Title>
 					<Flex gap="md" mb="md">
 						<Text fw={400} size="xl">
-							{salaryFork(salary)} ₽
+							{formatSalary(salary)} ₽
 						</Text>
 						<Text fw={400} size="md" color="#0F0F1080">
 							{experience.name}

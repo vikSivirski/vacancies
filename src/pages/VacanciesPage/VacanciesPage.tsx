@@ -12,11 +12,27 @@ const VacanciesPage = () => {
 	const dispatch = useDispatch();
 	const { city } = useParams();
 	const navigate = useNavigate();
-	const activeTab = city === 'moscow' ? 'Москва' : city === 'petersburg' ? 'Санкт-Петербург' : 'Москва';
+
+	enum Cities {
+		Moscow = 'moscow',
+		Petersburg = 'petersburg',
+	}
+
+	const cityNames: Record<Cities, string> = {
+		[Cities.Moscow]: 'Москва',
+		[Cities.Petersburg]: 'Санкт-Петербург',
+	};
+
+	const cityMap: Record<string, string> = {
+		Москва: 'moscow',
+		'Санкт-Петербург': 'petersburg',
+	};
+
+	const activeTab = cityNames[city as Cities] || cityNames[Cities.Moscow];
 
 	const handleChange = (value: string | null) => {
-		if (value === 'Москва') navigate('/vacancies/moscow');
-		if (value === 'Санкт-Петербург') navigate('/vacancies/petersburg');
+		if (!value) return;
+		navigate(`/vacancies/${cityMap[value]}`);
 	};
 
 	useEffect(() => {

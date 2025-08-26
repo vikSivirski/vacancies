@@ -1,6 +1,7 @@
 import { Button, Flex, List, Text, Title } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
+import formatSalary from '../../utils/formatSalary';
 import WorkFormat from '../WorkFormat';
 
 interface Vacancy {
@@ -22,19 +23,19 @@ const VacanciesListItem = ({ item }: VacancyListItemPropType) => {
 	const { name, salary, experience, employer, work_format, address, alternate_url } = item;
 	console.log(item);
 
-	const salaryFork = (data: Vacancy['salary']) => {
-		if (data !== null) {
-			if (data.to === null) {
-				return `${data.from} ₽`;
-			} else if (data.from === null) {
-				return `до ${data.to} ₽`;
-			} else {
-				return `${data.from} - ${data.to} ₽`;
-			}
-		} else {
-			return 'Зарплата не указана';
-		}
-	};
+	// const salaryFork = (data: Vacancy['salary']) => {
+	// 	if (data !== null) {
+	// 		if (data.to === null) {
+	// 			return `${data.from} ₽`;
+	// 		} else if (data.from === null) {
+	// 			return `до ${data.to} ₽`;
+	// 		} else {
+	// 			return `${data.from} - ${data.to} ₽`;
+	// 		}
+	// 	} else {
+	// 		return 'Зарплата не указана';
+	// 	}
+	// };
 
 	return (
 		<List.Item
@@ -47,7 +48,7 @@ const VacanciesListItem = ({ item }: VacancyListItemPropType) => {
 			</Title>
 			<Flex gap="md" mb="md">
 				<Text fw={400} size="xl">
-					{salaryFork(salary)}
+					{formatSalary(salary)}
 				</Text>
 				<Text fw={400} size="md" color="#0F0F1080">
 					{experience.name}
